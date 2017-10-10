@@ -18,8 +18,8 @@
     <!--Content-->
     <!--Humen-->
     <ImageView
-        android:layout_width="@dimen/logo"
-        android:layout_height="@dimen/logo"
+        android:layout_width="@dimen/logo2"
+        android:layout_height="@dimen/logo2"
         android:layout_gravity="center_horizontal"
         android:layout_margin="16dp"
         android:src="@drawable/humen" />
