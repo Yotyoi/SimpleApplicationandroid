@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Simple Application android</string>
+    <string name="username">Username</string>
 </resources>
