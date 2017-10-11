@@ -1,9 +1,16 @@
 package innova.kromjanya.yoswat.simpleapplicationandroid.fragment;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +30,10 @@ public class RegisterFragment extends Fragment {
 
     //    Explicit
     private String nameString, userString, passwordString;
+    private Uri uri;
+    private ImageView imageView;
+    private boolean aBoolean = true;
+    private String tag = "11octV1";
 
 
     @Nullable
@@ -39,6 +50,48 @@ public class RegisterFragment extends Fragment {
 //        Toolbar controller
 
         toolbarController();
+//        Humen Controller
+        humenController();
+
+    }      //main method
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == getActivity().RESULT_OK) {
+
+
+            Log.d(tag, "Result OK");
+
+            aBoolean = false;
+
+            try {
+                uri = data.getData();
+                Bitmap bitmap = BitmapFactory
+                        .decodeStream(getActivity().getContentResolver().openInputStream(uri));
+                imageView.setImageBitmap(bitmap);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }   // if
+
+    }   // on ActivityResult
+
+    private void humenController() {
+        imageView = (ImageView) getView().findViewById(R.id.imageView);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent, "Please Choose Application"), 1);
+
+
+            }   // on Click
+        });
     }
 
     private void toolbarController() {
@@ -72,19 +125,26 @@ public class RegisterFragment extends Fragment {
                 EditText userEditText = (EditText) getView().findViewById(R.id.editPassword);
                 EditText passwordEditText = (EditText) getView().findViewById(R.id.editPassword);
 
-//                ChenkData type
+//                CheckData type
                 nameString = nameEditText.getText().toString().trim();
                 userString = userEditText.getText().toString().trim();
                 passwordString = passwordEditText.getText().toString().trim();
 
 
 //                    check spec
-                if (nameString.equals("")|| userString.equals("")|| passwordString.equals("")) {
+                if (nameString.equals("") || userString.equals("") || passwordString.equals("")) {
 
 //                    Have Space
                     MyAlert myAlert = new MyAlert(getActivity());
                     myAlert.myDialog("Have Space", "Please Fill All Every Blank");
 
+
+                } else if (aBoolean) {
+                    MyAlert myAlert = new MyAlert(getActivity());
+                    myAlert.myDialog("No Image", "Please Choose Image");
+                } else {
+
+                    upLoadValuetoSever();
 
                 }
 
@@ -92,4 +152,28 @@ public class RegisterFragment extends Fragment {
         });
 
     }
+
+    private void upLoadValuetoSever() {
+
+
+        //find path image
+        String strPathImage = "";
+        String[] strings = new String[]{MediaStore.Images.Media.DATA};
+        Cursor cursor = getActivity().getContentResolver().query(uri, strings,
+                null, null, null);
+        if (cursor != null)
+        {
+            cursor.moveToFirst();
+            int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            strPathImage = cursor.getString(index);
+        }
+        else
+        {
+            strPathImage = uri.getPath();
+        }
+
+        Log.d(tag, "Path of Image ==> " + strPathImage);
+    }  //upload
+
+
 } // main class
