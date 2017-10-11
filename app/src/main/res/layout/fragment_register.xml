@@ -31,7 +31,7 @@
     <LinearLayout
 
         android:padding="18dp"
-        android:background="#3c000000"
+        android:background="#3cffffff"
         android:layout_margin="@dimen/margin"
         android:orientation="vertical"
         android:layout_width="match_parent"

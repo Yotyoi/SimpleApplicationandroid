@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import innova.kromjanya.yoswat.simpleapplicationandroid.MainActivity;
 import innova.kromjanya.yoswat.simpleapplicationandroid.R;
+import innova.kromjanya.yoswat.simpleapplicationandroid.utility.MyAlert;
 
 /**
  * Created by ThinkPad on 10/10/2560.
@@ -71,7 +72,21 @@ public class RegisterFragment extends Fragment {
                 EditText userEditText = (EditText) getView().findViewById(R.id.editPassword);
                 EditText passwordEditText = (EditText) getView().findViewById(R.id.editPassword);
 
+//                ChenkData type
+                nameString = nameEditText.getText().toString().trim();
+                userString = userEditText.getText().toString().trim();
+                passwordString = passwordEditText.getText().toString().trim();
 
+
+//                    check spec
+                if (nameString.equals("")|| userString.equals("")|| passwordString.equals("")) {
+
+//                    Have Space
+                    MyAlert myAlert = new MyAlert(getActivity());
+                    myAlert.myDialog("Have Space", "Please Fill All Every Blank");
+
+
+                }
 
             }  //onClick
         });
