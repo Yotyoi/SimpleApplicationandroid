@@ -34,5 +34,19 @@ public class MainFragment extends Fragment{
 
     private void registerController() {
         TextView textView = (TextView) getView().findViewById(R.id.txtRegister);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+//                Move to register
+
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.contentFragmentmain, new RegisterFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
     }
 } // Main class
