@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import org.jibble.simpleftp.SimpleFTP;
 
@@ -26,6 +27,7 @@ import innova.kromjanya.yoswat.simpleapplicationandroid.MainActivity;
 import innova.kromjanya.yoswat.simpleapplicationandroid.R;
 import innova.kromjanya.yoswat.simpleapplicationandroid.utility.MyAlert;
 import innova.kromjanya.yoswat.simpleapplicationandroid.utility.MyConstant;
+import innova.kromjanya.yoswat.simpleapplicationandroid.utility.UploadValuetoServer;
 
 /**
  * Created by ThinkPad on 10/10/2560.
@@ -198,7 +200,21 @@ public class RegisterFragment extends Fragment {
             simpleFTP.stor(new File(strPathImage));
             simpleFTP.disconnect();
 
-//            Update on mysql
+//            Update Value to mysql
+
+            Log.d(tag, "Name ==> " + nameString);
+            Log.d(tag, "User ==>" + userString);
+            Log.d(tag, "Password ==> " + passwordString);
+            Log.d(tag, "Image ==>" + findNameImage(strPathImage));
+
+            UploadValuetoServer uploadValuetoServer = new UploadValuetoServer(getActivity());
+            uploadValuetoServer.execute(nameString,userString,passwordString,
+                    findNameImage(strPathImage), myConstant.getHostString());
+            if (Boolean.parseBoolean(uploadValuetoServer.get())) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            } else {
+                Toast.makeText(getActivity(), "Error Cannot upload", Toast.LENGTH_LONG).show();
+            }
 
 
 
@@ -209,6 +225,15 @@ public class RegisterFragment extends Fragment {
 
 
     }  //upload
+
+    private String findNameImage(String strPathImage) {
+
+        String result = null;
+
+        result = strPathImage.substring(strPathImage.lastIndexOf("/"));
+        result = "http://swiftcodingthai.com/ino/ImageYoswat" + result;
+        return result;
+    }
 
 
 } // main class

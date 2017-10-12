@@ -11,25 +11,21 @@ public class MyConstant {
     private String passwordString = "Abc12345";
     private int portAnint = 21;
 
-    private String urlPostuser = "http://swiftcodingthai.com/ino/addUserBoat.php"
+    private String urlPostuser = "http://swiftcodingthai.com/ino/addUserBoat.php";
+    private String urlGetData = "http://swiftcodingthai.com/ino/getAllDataBoat.php";
 
-    public String getUrlPostuser() {
-        return urlPostuser;
+    public String getUrlGetData() {
+
+        return urlGetData;
     }
 
-    public String getHostString() {
-        return hostString;
-    }
+    public String getUrlPostuser() { return urlPostuser; }
 
-    public String getUserString() {
-        return userString;
-    }
+    public String getHostString() { return hostString; }
 
-    public String getPasswordString() {
-        return passwordString;
-    }
+    public String getUserString() { return userString; }
 
-    public int getPortAnint() {
-        return portAnint;
-    }
+    public String getPasswordString() { return passwordString; }
+
+    public int getPortAnint() { return portAnint; }
 }
