@@ -167,14 +167,11 @@ public class RegisterFragment extends Fragment {
         String[] strings = new String[]{MediaStore.Images.Media.DATA};
         Cursor cursor = getActivity().getContentResolver().query(uri, strings,
                 null, null, null);
-        if (cursor != null)
-        {
+        if (cursor != null) {
             cursor.moveToFirst();
             int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             strPathImage = cursor.getString(index);
-        }
-        else
-        {
+        } else {
             strPathImage = uri.getPath();
         }
 
@@ -201,12 +198,14 @@ public class RegisterFragment extends Fragment {
             simpleFTP.stor(new File(strPathImage));
             simpleFTP.disconnect();
 
+//            Update on mysql
+
+
 
 
         } catch (Exception e) {
             Log.d(tag, "e upload == " + e.toString());
         }
-
 
 
     }  //upload

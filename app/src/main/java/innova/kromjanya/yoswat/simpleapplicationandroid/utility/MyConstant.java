@@ -11,6 +11,12 @@ public class MyConstant {
     private String passwordString = "Abc12345";
     private int portAnint = 21;
 
+    private String urlPostuser = "http://swiftcodingthai.com/ino/addUserBoat.php"
+
+    public String getUrlPostuser() {
+        return urlPostuser;
+    }
+
     public String getHostString() {
         return hostString;
     }
