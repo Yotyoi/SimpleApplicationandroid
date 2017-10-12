@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,9 +18,14 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import org.jibble.simpleftp.SimpleFTP;
+
+import java.io.File;
+
 import innova.kromjanya.yoswat.simpleapplicationandroid.MainActivity;
 import innova.kromjanya.yoswat.simpleapplicationandroid.R;
 import innova.kromjanya.yoswat.simpleapplicationandroid.utility.MyAlert;
+import innova.kromjanya.yoswat.simpleapplicationandroid.utility.MyConstant;
 
 /**
  * Created by ThinkPad on 10/10/2560.
@@ -173,6 +179,36 @@ public class RegisterFragment extends Fragment {
         }
 
         Log.d(tag, "Path of Image ==> " + strPathImage);
+
+//        Upload file to Server
+        try {
+
+//            connect protocol ftp
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy
+                    .Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+            SimpleFTP simpleFTP = new SimpleFTP();
+            MyConstant myConstant = new MyConstant();
+            simpleFTP.connect(
+                    myConstant.getHostString(),
+                    myConstant.getPortAnint(),
+                    myConstant.getUserString(),
+                    myConstant.getPasswordString()
+            );
+            simpleFTP.bin();
+            simpleFTP.cwd("ImageYoswat");
+            simpleFTP.stor(new File(strPathImage));
+            simpleFTP.disconnect();
+
+
+
+        } catch (Exception e) {
+            Log.d(tag, "e upload == " + e.toString());
+        }
+
+
+
     }  //upload
 
 
